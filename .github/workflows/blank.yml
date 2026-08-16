@@ -1,12 +1,24 @@
-name: Hello Workflow
-
-on:
-  workflow_dispatch:
+workflow :
+on : workflow_dispatch:
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
+ build:
+  runs-on: ubuntu-latest 
+  steps:
+   - name : build
+     run : echo hi,"${{vars.BUILD_NAME}}"
 
-    steps:
-      - name: hello
-        run: echo "hello all"
+ test:
+  runs-on : ubuntu-latest
+  needs: build
+  steps:
+    - name : test
+      run : echo This is "${{vars.TEST_NAME}}"
+
+ deploy:
+  runs-on : ubuntu-latest
+  needs: test
+  steps:
+    - name : deployement
+      run : echo This is "${{vars.DEPLOYMENT }}"
+
